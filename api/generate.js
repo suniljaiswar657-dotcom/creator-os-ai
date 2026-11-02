@@ -1,4 +1,5 @@
 const MODEL = "gemini-3.8-flash";
+const FALLBACK_MODEL = "gemini-3.6-flash";
 const INTERACTIONS_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 
 module.exports = async function handler(req, res) {
@@ -29,24 +30,42 @@ module.exports = async function handler(req, res) {
   ].join("\n\n");
 
   try {
-    const upstream = await fetch(INTERACTIONS_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": key
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        input: prompt,
-        generation_config: { thinking_level: "low" }
-      })
-    });
+    const send = async model => {
+      const response = await fetch(INTERACTIONS_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": key
+        },
+        body: JSON.stringify({
+          model,
+          input: prompt,
+          generation_config: { thinking_level: "low" }
+        })
+      });
+      const data = await response.json().catch(() => ({}));
+      return { response, data };
+    };
 
-    const payload = await upstream.json().catch(() => ({}));
+    let usedModel = MODEL;
+    let result = await send(MODEL);
+    if ([429, 500, 502, 503, 504].includes(result.response.status)) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      result = await send(MODEL);
+    }
+    if ([429, 500, 502, 503, 504].includes(result.response.status)) {
+      usedModel = FALLBACK_MODEL;
+      result = await send(FALLBACK_MODEL);
+    }
+
+    const upstream = result.response;
+    const payload = result.data;
     if (!upstream.ok) {
       const message = payload?.error?.message || "Gemini API request failed.";
       const status = upstream.status === 429 ? 429 : 502;
-      return res.status(status).json({ error: message.slice(0, 240) });
+      return res.status(status).json({
+        error: "Primary aur fallback AI abhi available nahi hain. " + message.slice(0, 180)
+      });
     }
 
     let outputText = payload?.output_text;
@@ -87,7 +106,7 @@ module.exports = async function handler(req, res) {
       return res.status(502).json({ error: "AI response incomplete tha. Dobara try karo." });
     }
 
-    return res.status(200).json({ script, model: MODEL });
+    return res.status(200).json({ script, model: usedModel });
   } catch {
     return res.status(500).json({ error: "AI service temporarily unavailable." });
   }
