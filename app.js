@@ -39,7 +39,7 @@ function renderScripts(){
  document.getElementById("breadcrumbCurrent").textContent="Script studio";
  document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.view==="scripts"));
  const select=document.getElementById("scriptIdeaSelect"), topic=document.getElementById("scriptTopic");
- select.addEventListener("change",()=>{if(select.value!==""){const x=ideaBank[Number(select.value)];topic.value=x.title+" — "+x.angle+"\\nSuggested hook: "+x.hook}});
+ select.addEventListener("change",()=>{if(select.value!==""){const x=ideaBank[Number(select.value)];topic.value=x.title+" — "+x.angle+"\nSuggested hook: "+x.hook}});
  document.getElementById("generateScriptButton").addEventListener("click",generateScript);
  document.getElementById("copyScriptButton").addEventListener("click",copyScript);
  document.getElementById("sidebar").classList.remove("open");
@@ -57,8 +57,8 @@ async function generateScript(){
   if(!response.ok)throw new Error(data.error||"Script generate nahi hui.");
   const s=data.script||{};
   const sections=[["VIDEO TITLE",s.title],["OPENING HOOK",s.hook],["SCENE-BY-SCENE BREAKDOWN",s.scenes],["VOICE-OVER SCRIPT",s.voiceover],["YOUTUBE DESCRIPTION",s.description],["TAGS",s.tags]];
-  latestScriptText=sections.map(([label,value])=>label+"\\n"+(Array.isArray(value)?value.map((v,i)=>typeof v==="string"?((i+1)+". "+v):((i+1)+". "+(v.time||"")+" "+(v.visual||"")+"\\nVO: "+(v.voiceover||"")+"\\nAction: "+(v.action||""))).join("\\n\\n"):value||"")).join("\\n\\n");
-  output.innerHTML=sections.map(([label,value])=>`<article class="script-result-block"><h3>${label}</h3><div>${Array.isArray(value)?(label==="SCENE-BY-SCENE BREAKDOWN"?`<ol>${value.map(v=>`<li><b>${escapeHtml(v.time||"")}</b> — ${escapeHtml(v.visual||"")}<br><span>Voice-over: ${escapeHtml(v.voiceover||"")}</span><br><span>Action: ${escapeHtml(v.action||"")}</span></li>`).join("")}</ol>`:`<ol>${value.map(v=>`<li>${escapeHtml(v)}</li>`).join("")}</ol>`):escapeHtml(value).replace(/\\n/g,"<br>")}</div></article>`).join("");
+  latestScriptText=sections.map(([label,value])=>label+"\n"+(Array.isArray(value)?value.map((v,i)=>typeof v==="string"?((i+1)+". "+v):((i+1)+". "+(v.time||"")+" "+(v.visual||"")+"\nVO: "+(v.voiceover||"")+"\nAction: "+(v.action||""))).join("\n\n"):value||"")).join("\n\n");
+  output.innerHTML=sections.map(([label,value])=>`<article class="script-result-block"><h3>${label}</h3><div>${Array.isArray(value)?(label==="SCENE-BY-SCENE BREAKDOWN"?`<ol>${value.map(v=>`<li><b>${escapeHtml(v.time||"")}</b> — ${escapeHtml(v.visual||"")}<br><span>Voice-over: ${escapeHtml(v.voiceover||"")}</span><br><span>Action: ${escapeHtml(v.action||"")}</span></li>`).join("")}</ol>`:`<ol>${value.map(v=>`<li>${escapeHtml(v)}</li>`).join("")}</ol>`):escapeHtml(value).replace(/\n/g,"<br>")}</div></article>`).join("");
   document.getElementById("copyScriptButton").disabled=false;notify("Script ready — review facts and timing.");
  }catch(error){output.innerHTML=`<div class="error-state">${escapeHtml(error.message)}<br><small>Vercel mein GEMINI_API_KEY set hai aur deployment redeploy hua hai, ye check karo.</small></div>`;notify("Script generation failed.");}
  finally{button.disabled=false;button.textContent="✦ Generate complete script"}
