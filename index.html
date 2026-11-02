@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b10" />
+  <meta name="description" content="Creator OS AI — a focused content command center for gaming creators." />
+  <title>Creator OS AI — Creator Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Creator OS AI home"><span class="brand-mark">C</span><span>CREATOR<span class="muted">OS</span><small>AI STUDIO</small></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+        <button class="nav-item" data-view="ideas"><span>✦</span> Idea lab <em>NEW</em></button>
+        <button class="nav-item" data-view="scripts"><span>▤</span> Script studio</button>
+        <button class="nav-item" data-view="calendar"><span>▦</span> Content calendar</button>
+        <button class="nav-item" data-view="analytics"><span>⌁</span> Analytics</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="channel-card"><div class="channel-avatar">R</div><div><strong>RomeoRex Gaming</strong><small>YouTube workspace</small></div><span class="online-dot"></span></div>
+        <div class="sidebar-foot">CREATOR OS AI <span>v0.1.0</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton" aria-label="Toggle menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumbCurrent">Overview</strong></div>
+        <div class="top-actions"><span class="status-pill"><i></i> Workspace ready</span><div class="profile-avatar">S</div></div>
+      </header>
+
+      <section class="page-content">
+        <div class="welcome-row">
+          <div><div class="eyebrow">MONDAY, NOVEMBER 02, 2026</div><h1 id="pageTitle">Good morning, Creator<span>.</span></h1><p class="subheading">Your gaming content command center. Plan smarter, publish consistently.</p></div>
+          <button class="primary-button" id="newIdeaButton"><span>＋</span> Generate an idea</button>
+        </div>
+
+        <div class="channel-banner">
+          <div class="banner-icon">▶</div>
+          <div class="banner-copy"><small>ACTIVE CHANNEL</small><strong>RomeoRex Gaming</strong><span>BGMI · Gaming · Hindi</span></div>
+          <div class="banner-meta"><span class="live-dot"></span> Channel workspace</div>
+          <div class="banner-decoration">RR</div>
+        </div>
+
+        <div class="section-heading"><div><h2>Today's overview</h2><p>A quick snapshot of your creator workflow.</p></div><span class="date-chip">02 NOV 2026</span></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Ideas in pipeline</span><span class="stat-icon purple">✦</span></div><strong id="ideaCount">08</strong><small><b>+2</b> added this week</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Scripts ready</span><span class="stat-icon blue">▤</span></div><strong id="scriptCount">03</strong><small>Ready for your review</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Planned this week</span><span class="stat-icon orange">◷</span></div><strong id="plannedCount">04</strong><small>Across Shorts & videos</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Published this month</span><span class="stat-icon green">↗</span></div><strong>—</strong><small>Connect YouTube to track</small></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel idea-panel">
+            <div class="panel-heading"><div><h2>Fresh content ideas</h2><p>Starter prompts for your next BGMI uploads.</p></div><button class="text-button" data-view="ideas">View all <span>→</span></button></div>
+            <div id="ideaList" class="idea-list">
+              <article class="idea-row"><div class="idea-type short">SHORT</div><div class="idea-details"><strong>3 BGMI mistakes that reveal your position</strong><span>Educational · 30–45 sec</span></div><button class="icon-button use-idea" aria-label="Use idea">↗</button></article>
+              <article class="idea-row"><div class="idea-type video">VIDEO</div><div class="idea-details"><strong>Can a 2-finger player win a close-range fight?</strong><span>Challenge · 6–8 min</span></div><button class="icon-button use-idea" aria-label="Use idea">↗</button></article>
+              <article class="idea-row"><div class="idea-type short">SHORT</div><div class="idea-details"><strong>One movement trick to practise in TDM</strong><span>Tips · 20–30 sec</span></div><button class="icon-button use-idea" aria-label="Use idea">↗</button></article>
+            </div>
+          </section>
+
+          <section class="panel workflow-panel">
+            <div class="panel-heading"><div><h2>Quick actions</h2><p>Move from idea to upload.</p></div></div>
+            <button class="action-tile" data-view="ideas"><span class="action-icon purple">✦</span><span><strong>Find a video idea</strong><small>Build your next content concept</small></span><b>→</b></button>
+            <button class="action-tile" data-view="scripts"><span class="action-icon blue">▤</span><span><strong>Write a script</strong><small>Hook, scenes and call to action</small></span><b>→</b></button>
+            <button class="action-tile" data-view="calendar"><span class="action-icon orange">▦</span><span><strong>Plan your week</strong><small>Organise Shorts and long videos</small></span><b>→</b></button>
+          </section>
+        </div>
+
+        <section class="panel focus-panel"><div class="focus-symbol">✧</div><div><small>YOUR NEXT BEST MOVE</small><h2>Turn one idea into a complete video.</h2><p>Choose a topic, create a hook, then shape the script before recording.</p></div><button class="secondary-button" data-view="scripts">Open script studio <span>→</span></button></section>
+        <footer>Creator OS AI <span>·</span> Built for creators who keep moving. <span class="footer-right">Your content. Your control.</span></footer>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
